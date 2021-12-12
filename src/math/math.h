@@ -32,7 +32,6 @@ struct Quad
     Vec2 point1;
     Vec2 point2;
     Vec2 point3;
-    Quad() {}
     Quad(Vec2 point0, Vec2 point1, Vec2 point2, Vec2 point3) 
         : point0(point0), point1(point1), point2(point2), point3(point3) {}
     Quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) 
