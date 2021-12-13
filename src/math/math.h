@@ -44,6 +44,15 @@ struct iRect
     int w, h;
 };
 
+inline float clampf(float val, float min, float max)
+{
+    float result;
+    if (val < min) result = min;
+    else if (val > max) result = max;
+    else result = val;
+    return result;
+}
+
 inline float getXAtLinePoint(const Vec2 line, float y)
 {
     if (line.y == 0) return line.x;
