@@ -2,10 +2,24 @@
 
 struct Vec4
 {
-    float x{0};
-    float y{0};
-    float z{0};
-    float w{0};
+    union
+    {
+        struct
+        {
+            float x;
+            float y;
+            float z;
+            float w;
+        };
+        struct
+        {
+            float a;
+            float r;
+            float g;
+            float b;
+        };
+        float units[4];
+    };
     Vec4(float x, float y, float z, float w);
     Vec4() = default;
     float length() const;

@@ -1,5 +1,4 @@
 #pragma once
-#include <stdint.h>
 #include "../graphics/graphics.h"
 #include "../defs.h"
 struct SDL_Window;

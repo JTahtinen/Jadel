@@ -11,7 +11,7 @@ struct Mat4
     static Mat4 identity();
     static Mat4 perspective(float fov, float aspect, float near, float far);
     static Mat4 translate(const Vec3 &translation);
-    static Mat4 rotation(float angle, const Vec3 &axis);
+    static Mat4 rotation(float angleInDeg, const Vec3 &axis);
     static Mat4 scale(const Vec3 &scalar);
     static Mat4 ortho(float left, float right, float top, float bottom, float near, float far);
     Mat4 operator*(const Mat4& other) const;

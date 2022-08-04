@@ -2,9 +2,16 @@
 
 struct Vec3
 {
-    float x{0};
-    float y{0};
-    float z{0};
+    union
+    {
+        struct
+        {
+            float x;
+            float y;
+            float z;
+        };
+        float units[3];
+    };
     Vec3(float x, float y, float z);
     Vec3() = default;
     float length() const;
@@ -13,6 +20,7 @@ struct Vec3
     Vec3 subst(const Vec3 other) const;
     Vec3 mul(float value) const;
     float dot(const Vec3 other) const;
+    Vec3 cross(const Vec3 other) const;
     bool equals(const Vec3 other) const;
 
     Vec3 operator+(const Vec3 other) const;

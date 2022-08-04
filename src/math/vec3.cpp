@@ -36,6 +36,15 @@ float Vec3::dot(const Vec3 other) const
     return x * other.x + y * other.y + z * other.z;
 }
 
+Vec3 Vec3::cross(const Vec3 other) const
+{
+    Vec3 result;
+    result.x = y * other.z - z * other.y;
+    result.y = z * other.x - x * other.z;
+    result.z = x * other.y - y * other.x;
+    return result;
+}
+
 bool Vec3::equals(const Vec3 other) const
 {
     return (x == other.x && y == other.y && z == other.z);

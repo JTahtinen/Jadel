@@ -7,13 +7,28 @@
 
 Vec4 Mat4::mul(const Vec4 &vec) const
 {
+    /*
+    Vec4 result(0, 0, 0, 0);
+
+    for (int i = 0; i < 4; ++i)
+    {
+        for(int j = 0; j < 4; ++j)
+        {
+            result.units[i] += GET(j, i) * vec.units[j];
+        }
+    }
+    return result;
+*/
+
+        
+    
     Vec4 result(    
         GET(0, 0) * vec.x + GET(1, 0) * vec.y + GET(2, 0) * vec.z + GET(3, 0) * vec.w,
         GET(0, 1) * vec.x + GET(1, 1) * vec.y + GET(2, 1) * vec.z + GET(3, 1) * vec.w,
         GET(0, 2) * vec.x + GET(1, 2) * vec.y + GET(2, 2) * vec.z + GET(3, 2) * vec.w,
         GET(0, 3) * vec.x + GET(1, 3) * vec.y + GET(2, 3) * vec.z + GET(3, 3) * vec.w);
-
     return result;
+/*
     /*return Vec4{
 				GET(0, 0) * vec.x + GET(0, 1) * vec.y + GET(0, 2) * vec.z + GET(0, 3) * vec.w,
 				GET(1, 0) * vec.x + GET(1, 1) * vec.y + GET(2, 2) * vec.z + GET(3, 3) * vec.w,
@@ -24,11 +39,24 @@ Vec4 Mat4::mul(const Vec4 &vec) const
 
 Vec3 Mat4::mul(const Vec3 &vec) const
 {
+    /*
+    Vec3 result(0, 0, 0);
+    for (int i = 0; i < 3; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            result.units[i] += GET(j, i) * vec.units[j];
+        }
+    }
+    return result;
+    */
+    
     Vec3 result(
         GET(0, 0) * vec.x + GET(1, 0) * vec.y + GET(2, 0) * vec.z + GET(3, 0),
         GET(0, 1) * vec.x + GET(1, 1) * vec.y + GET(2, 1) * vec.z + GET(3, 1),
         GET(0, 2) * vec.x + GET(1, 2) * vec.y + GET(2, 2) * vec.z + GET(3, 2));
     return result;
+    
     /*return Vec3{
 				GET(0, 0) * vec.x + GET(0, 1) * vec.y + GET(0, 2) * vec.z + GET(0, 3),
 				GET(1, 0) * vec.x + GET(1, 1) * vec.y + GET(2, 2) * vec.z + GET(3, 3),
@@ -47,36 +75,10 @@ Mat4 Mat4::mul(const Mat4& other) const
                 GET(0, row) * other.GET(column, 0) + 
                 GET(1, row) * other.GET(column, 1) + 
                 GET(2, row) * other.GET(column, 2) +
-                GET(1, row) * other.GET(column, 3);            
+                GET(3, row) * other.GET(column, 3);            
         }
     }
     return result;
-    /*
-    return {
-        // First row
-        GET(0, 0) * GETOTHER(0, 0) + GET(1, 0) * GETOTHER(0, 1) + GET(2, 0) * GETOTHER(0, 2) + GET(3, 0) * GETOTHER(0, 3),
-        GET(0, 0) * GETOTHER(1, 0) + GET(1, 0) * GETOTHER(1, 1) + GET(2, 0) * GETOTHER(1, 2) + GET(3, 0) * GETOTHER(1, 3),
-        GET(0, 0) * GETOTHER(2, 0) + GET(1, 0) * GETOTHER(2, 1) + GET(2, 0) * GETOTHER(2, 2) + GET(3, 0) * GETOTHER(2, 3),
-        GET(0, 0) * GETOTHER(3, 0) + GET(1, 0) * GETOTHER(3, 1) + GET(2, 0) * GETOTHER(3, 2) + GET(3, 0) * GETOTHER(3, 3),
-
-        // Second row
-        GET(0, 1) * GETOTHER(0, 0) + GET(1, 1) * GETOTHER(0, 1) + GET(2, 1) * GETOTHER(0, 2) + GET(3, 1) * GETOTHER(0, 3),
-        GET(0, 1) * GETOTHER(1, 0) + GET(1, 1) * GETOTHER(1, 1) + GET(2, 1) * GETOTHER(1, 2) + GET(3, 1) * GETOTHER(1, 3),
-        GET(0, 1) * GETOTHER(2, 0) + GET(1, 1) * GETOTHER(2, 1) + GET(2, 1) * GETOTHER(2, 2) + GET(3, 1) * GETOTHER(2, 3),
-        GET(0, 1) * GETOTHER(3, 0) + GET(1, 1) * GETOTHER(3, 1) + GET(2, 1) * GETOTHER(3, 2) + GET(3, 1) * GETOTHER(3, 3),
-
-        // Third row
-        GET(0, 2) * GETOTHER(0, 0) + GET(1, 2) * GETOTHER(0, 1) + GET(2, 2) * GETOTHER(0, 2) + GET(3, 2) * GETOTHER(0, 3),
-        GET(0, 2) * GETOTHER(1, 0) + GET(1, 2) * GETOTHER(1, 1) + GET(2, 2) * GETOTHER(1, 2) + GET(3, 2) * GETOTHER(1, 3),
-        GET(0, 2) * GETOTHER(2, 0) + GET(1, 2) * GETOTHER(2, 1) + GET(2, 2) * GETOTHER(2, 2) + GET(3, 2) * GETOTHER(2, 3),
-        GET(0, 2) * GETOTHER(3, 0) + GET(1, 2) * GETOTHER(3, 1) + GET(2, 2) * GETOTHER(3, 2) + GET(3, 2) * GETOTHER(3, 3),
-
-        // Fourth row
-        GET(0, 3) * GETOTHER(0, 0) + GET(1, 3) * GETOTHER(0, 1) + GET(2, 3) * GETOTHER(0, 2) + GET(3, 3) * GETOTHER(0, 3),
-        GET(0, 3) * GETOTHER(1, 0) + GET(1, 3) * GETOTHER(1, 1) + GET(2, 3) * GETOTHER(1, 2) + GET(3, 3) * GETOTHER(1, 3),
-        GET(0, 3) * GETOTHER(2, 0) + GET(1, 3) * GETOTHER(2, 1) + GET(2, 3) * GETOTHER(2, 2) + GET(3, 3) * GETOTHER(2, 3),
-        GET(0, 3) * GETOTHER(3, 0) + GET(1, 3) * GETOTHER(3, 1) + GET(2, 3) * GETOTHER(3, 2) + GET(3, 3) * GETOTHER(3, 3)};
-*/
 }
 
 Mat4 Mat4::identity()
@@ -91,11 +93,24 @@ Mat4 Mat4::identity()
 Mat4 Mat4::perspective(float fov, float aspect, float near, float far)
 {
     float fovRad = TO_RADIANS(fov);
+    float scale = 1.0f / (aspect * (float)tan(fovRad / 2.0f));
+
+    Mat4 result =
+    {
+        scale, 0, 0, 0,
+        0, scale, 0, 0,
+        0, 0, -far / (far - near), -far * near / (far - near),
+        0, 0, -1.0f, 0
+
+    };
+    return result;
+/*
     return Mat4{
-        1.0f / (aspect * (float)tan(fovRad / 2.0f)), 0, 0, 0,
-        0, 1.0f / (float)tan(fovRad / 2.0f), 0, 0,
+        scale, 0, 0, 0,
+        0, scale, 0, 0,
         0, 0, -((far + near) / (far - near)), -((2.0f * (near * far)) / (far - near)),
         0, 0, -1.0f, 0};
+*/
 }
 
 Mat4 Mat4::translate(const Vec3 &translation)
@@ -107,9 +122,9 @@ Mat4 Mat4::translate(const Vec3 &translation)
         0.0f, 0.0f, 0.0f, 1.0f};
 }
 
-Mat4 Mat4::rotation(float angle, const Vec3 &axis)
+Mat4 Mat4::rotation(float angleInDeg, const Vec3 &axis)
 {
-    float A = TO_RADIANS(angle);
+    float A = TO_RADIANS(angleInDeg);
     float x = axis.x;
     float y = axis.y;
     float z = axis.z;

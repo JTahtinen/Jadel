@@ -153,3 +153,77 @@ inline float fremainder(float value, float divider)
     float result = value - valFloor * divider;
     return result;
 }
+
+inline int roundToInt(float val)
+{
+    int result = (val > 0) ? (int)(val + 0.5f) : (int)(val - 0.5f);
+    return result;
+}
+
+
+inline void interpolate(float i0, float d0, float i1, float d1, float interval, float* buffer,
+                        size_t bufferSize,
+                        size_t* count)
+{
+    if (bufferSize == 0) return;
+    if (count) *count = 0;
+    if (interval == 0)
+    {
+        return;
+    }
+        if (i0 == i1)
+    {
+        buffer[*count++] = d0;
+        return;
+    }
+
+    float finali0;
+    float finali1;
+    float finald0;
+    float finald1;
+    if (i0 < i1)
+    {
+        finali0 = i0;
+        finali1 = i1;
+        finald0 = d0;
+        finald1 = d1;
+    }
+    else
+    {
+        finali0 = i1;
+        finali1 = i0;
+        finald0 = d1;
+        finald1 = d0;
+    }
+    float dDiff = d1 - d0;
+    float iDiff = i1 - i0;
+
+    float a = dDiff / iDiff;
+    float d = finald0;
+
+    int valuesToWrite = (int)((finali1 - finali0) / interval);
+    if (valuesToWrite > bufferSize - 1) valuesToWrite = bufferSize - 1;
+   
+    for (int i = 0; i <= valuesToWrite; ++i)
+    {
+        buffer[i] = d;
+        d += a * interval;
+        if (count) *count = *count + 1;
+    }
+}
+
+inline void interpolate(float range, float interval, float* buffer, size_t bufferSize, size_t* count)
+{
+    *count = 0;
+    if (range < interval) return;
+    int valuesToWrite = (int)(range / interval);    
+    if (valuesToWrite > bufferSize - 1) valuesToWrite = bufferSize - 1;
+    
+
+    for (int i = 0; i <= valuesToWrite; ++i)
+    {
+        float interp = (i / range) * interval;
+        buffer[i] = interp;
+        *count = *count + 1;
+    }
+}
